@@ -56,8 +56,6 @@ A comprehensive **Friend Referral System** for FiveM ESX servers that allows pla
 
 ### Recommended & Tested
 - **ox_inventory** (Tested and compatible)
-- **Node.js** 16+ (for NUI development)
-- **Modern Web Browser** (for NUI interface)
 
 ### Dependencies
 Make sure these resources are started before this script:
@@ -70,13 +68,7 @@ ensure ox_inventory  # If using ox_inventory
 ## 🚀 Installation
 
 ### 1. Download & Extract
-```bash
-# Clone or download the repository
-git clone https://github.com/yourusername/esx-referral-system.git
 
-# Extract to your resources folder
-cp -r esx-referral-system [FiveM]/resources/[esx]/
-```
 
 ### 2. Database Setup
 The script automatically creates required tables on first run. No manual SQL execution needed!
