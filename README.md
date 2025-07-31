@@ -27,11 +27,11 @@ A comprehensive **Friend Referral System** for FiveM ESX servers that allows pla
 ## 🎥 Preview
 
 <a href="[https://streamable.com/lzgwf9]">
-  <img src="https://img.shields.io/badge/▶️%20Watch-Demo%20Video-red?style=for-the-badge&logoColor=white" alt="Watch Demo Menu">
+  <img src="https://img.shields.io/badge/▶️%20Watch-Menu%20Video-red?style=for-the-badge&logoColor=white" alt="Watch Demo Menu">
 </a>
 
 <a href="[https://streamable.com/k2rdpg]">
-  <img src="https://img.shields.io/badge/▶️%20Watch-Demo%20Video-red?style=for-the-badge&logoColor=white" alt="Watch Demo Test">
+  <img src="https://img.shields.io/badge/▶️%20Watch-Test%20Video-red?style=for-the-badge&logoColor=white" alt="Watch Demo Test">
 </a>
 
 *Click the button above to watch the demo*
