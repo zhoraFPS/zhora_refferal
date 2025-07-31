@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freunde werben Freunde</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" :class="{ 'visible': visible }">
+        <div class="nui-header">
+            <h1><i class="fas fa-users"></i>Freunde werben Freunde</h1>
+            <button @click="closeNUI" class="close-button" title="Schließen">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="tabs">
+            <button
+                v-for="tabName in tabs"
+                :key="tabName"
+                @click="currentTab = tabName"
+                :class="['tab-button', { active: currentTab === tabName }]"
+            >
+                {{ tabTranslations[tabName] }}
+            </button>
+        </div>
+        <div class="tab-content">
+            <div v-if="isLoading && visible" class="loading-spinner"></div>
+            <transition name="fade" mode="out-in">
+                <div :key="currentTab" v-if="!isLoading">
+                    <div v-if="currentTab === 'startseite'">
+                        <h2>Willkommen!</h2>
+                        <p v-if="!hasReferredSomeone">
+                            Wurde dir dieser Server von einem Freund empfohlen? Gib hier seinen Code ein, um ihn zu unterstützen!
+                        </p>
+                        <p v-else>
+                            Du hast bereits einen Code eingelöst. Vielen Dank!
+                        </p>
+                        <div class="form-group" v-if="!hasReferredSomeone">
+                            <label for="referralCode">Referral-Code eingeben</label>
+                            <input type="text" id="referralCode" v-model="enteredCode" placeholder="z.B. NS-A1B2C3D4" @keyup.enter="submitCode">
+                        </div>
+                        <button class="btn" @click="submitCode" v-if="!hasReferredSomeone" :disabled="isSubmitting">
+                            <i class="fas fa-paper-plane"></i> {{ isSubmitting ? 'Sende...' : 'Code einlösen' }}
+                        </button>
+                        <div v-if="message.text" :class="['message', message.type]">
+                            <i v-if="message.type === 'success'" class="fas fa-check-circle"></i>
+                            <i v-if="message.type === 'error'" class="fas fa-times-circle"></i>
+                            <i v-if="message.type === 'info'" class="fas fa-info-circle"></i>
+                            {{ message.text }}
+                        </div>
+                    </div>
+
+                    <div v-if="currentTab === 'meinCode'">
+                        <h2>Dein persönlicher Referral-Code</h2>
+                        <p>Teile diesen Code mit deinen Freunden! Wenn sie ihn bei ihrer ersten Anmeldung oder hier eingeben, erhältst du Belohnungen.</p>
+                        <div class="code-display-container">
+                             <div class="code-display">{{ myCode || 'Lade...' }}</div>
+                             <button class="btn btn-secondary" @click="copyCode" title="Code kopieren">
+                                <i class="fas fa-copy"></i> Code kopieren
+                            </button>
+                        </div>
+                        <div v-if="copyMessage" class="message info">
+                            <i class="fas fa-clipboard-check"></i> {{ copyMessage }}
+                        </div>
+                    </div>
+
+                    <div v-if="currentTab === 'eingeladenePersonen'">
+                        <h2>Von dir eingeladene Personen ({{ invitedPlayers.length }})</h2>
+                        <p v-if="invitedPlayers.length === 0">Du hast bisher noch niemanden erfolgreich geworben. Teile deinen Code!</p>
+                        <ul class="invited-list" v-else>
+                            <li v-for="(player, index) in invitedPlayers" :key="index">
+                                <span><i class="fas fa-user-check" style="margin-right: 8px; color: var(--success-color);"></i>{{ player.name }}</span>
+                                <span style="font-size: 0.9em; opacity: 0.7;">Geworben am: {{ player.date }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div v-if="currentTab === 'meineBelohnungen'">
+                        <h2>Deine Meilensteine & Belohnungen</h2>
+                        <p>Für jeden geworbenen Freund kommst du deinen Belohnungen näher!</p>
+                        <p>Aktuell geworbene Freunde: <strong>{{ invitedPlayers.length }}</strong></p>
+                        <ul class="rewards-list" v-if="rewards.length > 0">
+                            <li v-for="reward in rewards" :key="reward.label + reward.required_referrals" :class="{ unlocked: isRewardUnlocked(reward) }">
+                                <div>
+                                    <strong>{{ reward.label }}</strong><br>
+                                    <small>Benötigt: {{ reward.required_referrals }} Freunde</small>
+                                </div>
+                                <span class="status" :class="{ unlocked: isRewardUnlocked(reward), locked: !isRewardUnlocked(reward) }">
+                                    <i :class="isRewardUnlocked(reward) ? 'fas fa-lock-open' : 'fas fa-lock'"></i>
+                                    {{ isRewardUnlocked(reward) ? 'Freigeschaltet' : 'Gesperrt' }}
+                                </span>
+                            </li>
+                        </ul>
+                         <p v-else>Keine Belohnungen konfiguriert.</p>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+    <script src="app.js" defer></script>
+</body>
+</html>

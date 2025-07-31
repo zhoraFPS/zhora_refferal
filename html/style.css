@@ -1,0 +1,412 @@
+/* ns_code/html/style.css - Modern Apple UI Design - Solider Hintergrund - Fix */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Angepasstes Apple-Design Farbschema */
+    --primary-bg-panel-solid: rgb(35, 35, 35); /* Solide Version der Panel-Farbe */
+    --secondary-bg-elements: rgb(50, 50, 50); /* Solide Version der Element-Farbe */
+    --accent-color: #007AFF;
+    --text-color: #F5F5F7;
+    --text-color-secondary: #C7C7CC;
+    --border-color: rgba(255, 255, 255, 0.15);
+    --hover-bg: rgb(65, 65, 65);
+    --active-element-bg: rgb(85, 85, 85);
+    --success-color: #34C759;
+    --error-color: #FF3B30;
+    --info-color: var(--accent-color);
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --panel-border-radius: 22px;
+    --element-border-radius: 10px;
+    --transition-speed-fast: 0.2s;
+    --transition-speed-normal: 0.25s;
+    --shadow-color-soft: rgba(0, 0, 0, 0.25);
+    --shadow-color-strong: rgba(0, 0, 0, 0.35);
+}
+
+/* Globale Stile und Resets */
+body {
+    font-family: var(--font-family);
+    /* WICHTIG: Body transparent machen, damit er nicht den Bildschirm füllt, falls #app nicht korrekt rendert */
+    background-color: transparent !important;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hauptcontainer für die Vue App mit Animation */
+#app {
+    width: 680px;
+    max-width: 95%;
+    background-color: var(--primary-bg-panel-solid); /* Solider Hintergrund für das Panel */
+    border-radius: var(--panel-border-radius);
+    box-shadow: 0 15px 45px var(--shadow-color-strong), 0 0 0 1px var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+
+    opacity: 0;
+    transform: translate(0px, 15px) scale(0.97);
+    transition: opacity var(--transition-speed-normal) cubic-bezier(0.3, 1, 0.7, 1),
+                transform var(--transition-speed-normal) cubic-bezier(0.3, 1, 0.7, 1),
+                visibility 0s var(--transition-speed-normal);
+    pointer-events: none;
+    visibility: hidden; /* Startet unsichtbar */
+}
+
+#app.visible {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1);
+    pointer-events: auto;
+    visibility: visible; /* Wird sichtbar durch Vue-Klasse */
+    transition-delay: 0s;
+}
+
+.nui-header {
+    padding: 18px 25px;
+    background-color: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.nui-header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nui-header h1 .fas {
+    font-size: 20px;
+    color: var(--accent-color);
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-speed-fast) ease, color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease;
+}
+.close-button:hover {
+    background-color: var(--error-color);
+    color: white;
+    transform: rotate(90deg);
+}
+.close-button:active {
+    transform: rotate(90deg) scale(0.9);
+}
+
+
+.tabs {
+    display: flex;
+    background-color: rgba(0,0,0,0.15);
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.tab-button {
+    flex-grow: 1;
+    padding: 9px 14px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color-secondary);
+    font-size: 13.5px;
+    font-weight: 500;
+    border-radius: var(--element-border-radius);
+    transition: background-color var(--transition-speed-fast) ease, color var(--transition-speed-fast) ease;
+    text-align: center;
+}
+
+.tab-button.active {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 600;
+}
+.tab-button:hover:not(.active) {
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+}
+.tab-button:active {
+    transform: scale(0.98);
+}
+
+.tab-content {
+    padding: 25px 28px;
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 300px;
+}
+
+.tab-content::-webkit-scrollbar {
+    width: 8px;
+}
+.tab-content::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+.tab-content::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+    border: 2px solid var(--primary-bg-panel-solid);
+    background-clip: padding-box;
+}
+.tab-content::-webkit-scrollbar-thumb:hover {
+    background: #005bb5;
+}
+
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-color-secondary);
+    margin-bottom: 18px;
+}
+p strong {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-color-secondary);
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--secondary-bg-elements);
+    border: 1px solid var(--border-color);
+    border-radius: var(--element-border-radius);
+    color: var(--text-color);
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease, background-color var(--transition-speed-fast) ease;
+}
+.form-group input[type="text"]::placeholder {
+    color: rgba(235, 235, 245, 0.45);
+    font-weight: 400;
+}
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: var(--hover-bg);
+    box-shadow: 0 0 0 3.5px rgba(0, 122, 255, 0.25);
+}
+
+.btn {
+    padding: 11px 20px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--element-border-radius);
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: background-color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 3px 8px rgba(0, 122, 255, 0.22);
+    -webkit-tap-highlight-color: transparent;
+}
+.btn i.fas {
+    font-size: 14px;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: #0070E0;
+    box-shadow: 0 5px 12px rgba(0, 122, 255, 0.28);
+}
+.btn:active:not(:disabled) {
+    transform: scale(0.97);
+    transition-duration: 0.05s;
+}
+.btn:disabled {
+    background-color: var(--secondary-bg-elements);
+    color: var(--text-color-secondary);
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.btn.btn-secondary {
+    background-color: var(--secondary-bg-elements);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+.btn.btn-secondary:hover:not(:disabled) {
+    background-color: var(--hover-bg);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.code-display-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+    background-color: rgba(0,0,0,0.15);
+    padding: 12px;
+    border-radius: var(--element-border-radius);
+}
+
+.code-display {
+    background-color: transparent;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    border: 1px dashed var(--accent-color);
+    color: var(--accent-color);
+    user-select: all;
+    word-break: break-all;
+    flex-grow: 1;
+}
+
+.invited-list, .rewards-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+.invited-list li, .rewards-list li {
+    background-color: var(--secondary-bg-elements);
+    padding: 14px 18px;
+    border-radius: var(--element-border-radius);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed-fast) ease;
+}
+.invited-list li:hover, .rewards-list li:hover {
+    background-color: var(--hover-bg);
+}
+
+.invited-list li span:first-child, .rewards-list li div strong {
+    font-weight: 500;
+    color: var(--text-color);
+}
+.invited-list li span:last-child, .rewards-list li div small {
+    font-size: 0.85em;
+    color: var(--text-color-secondary);
+}
+.rewards-list li.unlocked {
+    border-left: 4px solid var(--success-color);
+    padding-left: calc(18px - 3px);
+}
+.rewards-list li .status {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 15px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.rewards-list li .status.unlocked {
+    background-color: var(--success-color);
+    color: white;
+}
+.rewards-list li .status.locked {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--text-color-secondary);
+}
+
+.message {
+    padding: 12px 18px;
+    border-radius: var(--element-border-radius);
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.message i.fas {
+    font-size: 16px;
+}
+.message.success {
+    background-color: rgba(52, 199, 89, 0.2);
+    color: var(--success-color);
+    border-color: rgba(52, 199, 89, 0.5);
+}
+.message.error {
+    background-color: rgba(255, 59, 48, 0.2);
+    color: var(--error-color);
+    border-color: rgba(255, 59, 48, 0.5);
+}
+.message.info {
+    background-color: rgba(0, 122, 255, 0.2);
+    color: var(--info-color);
+    border-color: rgba(0, 122, 255, 0.5);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.15s ease-out;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.loading-spinner {
+    border: 3.5px solid rgba(255, 255, 255, 0.2);
+    border-left-color: var(--accent-color);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 0.8s linear infinite;
+    margin: 30px auto;
+    display: block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
