@@ -24,7 +24,7 @@ new Vue({
     },
     methods: {
         async postNuiMessage(eventName, data = {}) {
-            const resourceName = 'ns_code'; // Name deines Ressourcenordners
+            const resourceName = 'zhora_refferal'; // Name deines Ressourcenordners
 
             try {
                 const resp = await fetch(`https://${resourceName}/${eventName}`, {
