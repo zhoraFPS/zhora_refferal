@@ -536,8 +536,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Credits
 
-**Developed by:** [Your Name/Organization]
-**Framework:** ESX Framework Team
+**Developed by:** [Zhora]
+**Framework:** ESX Framework
 **Tested with:** ox_inventory by Overextended
 **Database:** oxmysql by Overextended
 **Special Thanks:** FiveM Community
